@@ -13,24 +13,23 @@ function [xs,Ps,X,P]=joint_MC(ns,rhos,sigmas,scales)
 % each row contains a specific joint state
 % - P      : prod(ns)-by-prod(ns) joint transition matrix
 %
-% (c) Aliaksandr Zaretski, 2020
+% (c) Aliaksandr Zaretski, 2021
 
-% Define objects
 k=numel(ns);
+
+% Discretize each process
 xs=cell(k,1);
 Ps=cell(k,1);
-
-% Discretize each process and construct joint transition matrix
-P=1;
 for i=1:k
     [xs{i},Ps{i}]=MC_discrete(ns(i),rhos(i),sigmas(i),scales(i));
-    P=kron(P,Ps{i});
 end
 
 % Construct joint Markov chain
 g=cell(1,k);
 [g{:}]=ndgrid(xs{:});
 X=cell2mat(cellfun(@(x)x(:),g,'UniformOutput',false));
+Ps_flip=flip(Ps);   % reverse to be consistent with ndgrid order
+P=kron(Ps_flip{:});
 
 end
 
