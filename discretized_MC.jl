@@ -1,5 +1,5 @@
 # Discretizes k independent AR(1) processes to discrete-state Markov chains and constructs a joint Markov chain and transition matrix
-# using LazyGrids,StatsFuns
+# using LazyGrids
 # (c) Aliaksandr Zaretski, 2021
 function joint_MC(ns,rhos,sigmas,scales)
     # Inputs
