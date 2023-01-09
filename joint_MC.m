@@ -28,8 +28,10 @@ end
 g=cell(1,k);
 [g{:}]=ndgrid(xs{:});
 X=cell2mat(cellfun(@(x)x(:),g,'UniformOutput',false));
-Ps_flip=flip(Ps);   % reverse to be consistent with ndgrid order
-P=kron(Ps_flip{:});
+P=1;
+for i=k:-1:1
+    P=kron(P,Ps{i});
+end
 
 end
 
